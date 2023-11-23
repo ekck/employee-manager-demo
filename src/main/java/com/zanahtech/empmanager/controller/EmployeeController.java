@@ -23,7 +23,7 @@ public class EmployeeController {
     }
     //create employee api
     @PostMapping("/employees")
-    public Employee createEmployee(@RequestBody Employee employee){
+    public Employee createEmployee(@RequestBodygit   Employee employee){
         return employeeRepository.save(employee);
     }
 }
