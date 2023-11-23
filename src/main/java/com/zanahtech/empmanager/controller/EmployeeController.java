@@ -1,8 +1,10 @@
 package com.zanahtech.empmanager.controller;
 
 import com.zanahtech.empmanager.entity.Employee;
+import com.zanahtech.empmanager.exception.ReceourceNotFoundException;
 import com.zanahtech.empmanager.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,17 @@ public class EmployeeController {
     }
     //create employee api
     @PostMapping("/employees")
-    public Employee createEmployee(@RequestBodygit   Employee employee){
+    public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.save(employee);
     }
+
+    //get employee by id rest api
+    @GetMapping("/employees/{id}")
+    public Employee getEmployeeById(@PathVariable Long id){
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ReceourceNotFoundException("Employee not exixts with id :" + id));
+        return ResponseEntity.ok(employee).getBody();
+    }
+
+    // update employee rest api
 }
